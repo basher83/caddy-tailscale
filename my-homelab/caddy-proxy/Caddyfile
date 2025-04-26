@@ -1,0 +1,34 @@
+{
+  # More explicit Tailscale configuration to ensure it connects properly
+  tailscale {
+    ephemeral
+    hostname caddy-proxy
+    # Uncomment and set this if you want to use a specific Tailnet
+    # tailnet your-tailnet.ts.net
+  }
+}
+
+coder.securehaven.business, *.coder.securehaven.business {
+        tls {
+                dns cloudflare {
+                        api_token {env.CF_API_TOKEN}
+                        zone_token {env.CF_ZONE_TOKEN}
+                }
+        }
+        reverse_proxy 127.0.0.1:3000
+}
+
+gotify.securehaven.business {
+        tls {
+                dns cloudflare {
+                        api_token {env.CF_API_TOKEN}
+                        zone_token {env.CF_ZONE_TOKEN}
+                }
+        }
+
+        reverse_proxy {
+                transport tailscale {
+                        hostname caddy-home
+                }
+        }
+}

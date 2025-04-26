@@ -1,0 +1,17 @@
+{
+        tailscale {
+                auth_key {env.TAILSCALE_AUTH_KEY}
+                ephemeral
+        }
+}
+
+gotify.securehaven.business {
+        bind tailscale/caddy-home
+        tls {
+                get_certificate tailscale
+        }
+        reverse_proxy 192.168.30.212 {
+                header_up X-Forwarded-Proto https
+                header_up Host {host}
+        }
+}

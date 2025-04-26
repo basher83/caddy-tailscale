@@ -1,0 +1,17 @@
+# Simple test configuration to verify Tailscale connectivity
+# This is based on the simple.caddyfile example from the repository
+
+{
+  # Global options block
+  debug  # Enable debug logging
+  tailscale {
+    ephemeral
+    hostname caddy-proxy
+  }
+}
+
+# Simple site that just responds with "OK" to verify Caddy is running
+:80 {
+  bind tailscale/caddy-proxy
+  respond "Tailscale test site is working!"
+}
